@@ -1,0 +1,85 @@
+# Headless KRDP Setup on Manjaro ARM KDE Plasma
+
+## 1. Install required packages
+
+```bash
+sudo pacman -Syu --needed krdp kwalletmanager kwallet-pam qt6-tools
+```
+
+## 2. Enable Autologin
+
+1. Go to **System Settings - Login Screen (SDDM)**
+2. In **Behavior**, enable **Automatically log in**
+3. Select your user account
+4. Apply changes
+
+## 3. Configure KRDP Server
+
+1. Go to **System Settings - Networking - Remote Desktop**
+2. Enable the **RDP Server**
+3. Add your user account and set a password under "Usernames"
+4. Enable **Autostart at login**
+5. Apply all changes
+
+## 4. Set Blank KWallet Password
+
+1. Open **KWalletManager**
+2. Select your default wallet (`kdewallet`)
+3. Go to **File - Change Password**
+4. Leave **both** Old and New password fields **completely empty**
+5. Confirm the change
+
+## 5. Create Wallet Auto-Open Service
+
+Run the following commands:
+
+```bash
+mkdir -p ~/.config/systemd/user
+
+cat > ~/.config/systemd/user/open-kwallet.service << EOF
+[Unit]
+Description=Open KWallet (for blank password)
+After=plasma-kwallet-pam.service kwalletd6.service
+Wants=plasma-kwallet-pam.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/qdbus6 org.kde.kwalletd6 /modules/kwalletd6 org.kde.KWallet.open kdewallet 0 "$(whoami)"
+RemainAfterExit=yes
+
+[Install]
+WantedBy=graphical-session.target
+EOF
+```
+
+## 6. Make KRDP Wait for Wallet
+
+```bash
+systemctl --user edit app-org.kde.krdpserver.service
+```
+
+Edit empty section to look like this:
+
+```txt
+### Anything between here and the comment below will become the contents of the drop-in file
+
+[Unit]
+After=open-kwallet.service plasma-kwallet-pam.service kwalletd6.service
+Wants=open-kwallet.service
+
+### Edits below this comment will be discarded
+```
+
+## 7. Enable Services
+
+```bash
+systemctl --user daemon-reload
+systemctl --user enable --now open-kwallet.service
+systemctl --user enable --now app-org.kde.krdpserver.service
+```
+
+## 8. Reboot
+
+```bash
+sudo reboot
+```
