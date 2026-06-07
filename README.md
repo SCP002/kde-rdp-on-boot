@@ -1,4 +1,4 @@
-# Headless KRDP Setup on Manjaro ARM KDE Plasma
+# Autostart KRDP on Manjaro with KDE Plasma
 
 ## 1. Install required packages
 
@@ -25,20 +25,18 @@ sudo pacman -Syu --needed krdp kwalletmanager kwallet-pam qt6-tools
 
 1. Open **KWalletManager**
 2. Select your default wallet (`kdewallet`)
-3. Go to **File - Change Password**
+3. Click on **Change Password...**
 4. Leave **both** Old and New password fields **completely empty**
 5. Confirm the change
 
 ## 5. Create Wallet Auto-Open Service
-
-Run the following commands:
 
 ```bash
 mkdir -p ~/.config/systemd/user
 
 cat > ~/.config/systemd/user/open-kwallet.service << EOF
 [Unit]
-Description=Open KWallet (for blank password)
+Description=Open KWallet
 After=plasma-kwallet-pam.service kwalletd6.service
 Wants=plasma-kwallet-pam.service
 
