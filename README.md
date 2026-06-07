@@ -83,7 +83,16 @@ systemctl --user enable --now open-kwallet.service
 systemctl --user enable --now app-org.kde.krdpserver.service
 ```
 
-## 9. Reboot
+## 9. Adjust resolution
+
+If you have a 4K+ monitor, you may want to adjust the resolution to for better performance:
+
+1. Go to **System Settings - Display and Monitor**
+2. Select **Display Configuration**
+3. Select Resolution **1680x1050**
+4. Apply all changes
+
+## 10. Reboot
 
 ```bash
 sudo reboot
