@@ -16,12 +16,19 @@ sudo pacman -Syu --needed krdp kwalletmanager kwallet-pam qt6-tools
 ## 3. Configure KRDP Server
 
 1. Go to **System Settings - Networking - Remote Desktop**
-2. Enable the **RDP Server**
+2. Toggle on the **Enable RDP Server**
 3. Add your user account and set a password under "Usernames"
-4. Enable **Autostart at login**
+4. Check **Autostart at login** toggle below
 5. Apply all changes
 
-## 4. Set Blank KWallet Password
+## 4. Configure firewall
+
+```bash
+sudo firewall-cmd --permanent --add-port=3389/tcp
+sudo firewall-cmd --reload
+```
+
+## 5. Set Blank KWallet Password
 
 1. Open **KWalletManager**
 2. Select your default wallet (`kdewallet`)
@@ -29,7 +36,7 @@ sudo pacman -Syu --needed krdp kwalletmanager kwallet-pam qt6-tools
 4. Leave **both** Old and New password fields **completely empty**
 5. Confirm the change
 
-## 5. Create Wallet Auto-Open Service
+## 6. Create Wallet Auto-Open Service
 
 ```bash
 mkdir -p ~/.config/systemd/user
@@ -50,7 +57,7 @@ WantedBy=graphical-session.target
 EOF
 ```
 
-## 6. Make KRDP Wait for Wallet
+## 7. Make KRDP Wait for Wallet
 
 ```bash
 systemctl --user edit app-org.kde.krdpserver.service
@@ -68,7 +75,7 @@ Wants=open-kwallet.service
 ### Edits below this comment will be discarded
 ```
 
-## 7. Enable Services
+## 8. Enable Services
 
 ```bash
 systemctl --user daemon-reload
@@ -76,7 +83,7 @@ systemctl --user enable --now open-kwallet.service
 systemctl --user enable --now app-org.kde.krdpserver.service
 ```
 
-## 8. Reboot
+## 9. Reboot
 
 ```bash
 sudo reboot
