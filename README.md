@@ -11,7 +11,7 @@ sudo pacman -Syu --needed krdp kwalletmanager kwallet-pam qt6-tools
 1. Go to **System Settings - Login Screen (SDDM)**
 2. In **Behavior**, enable **Automatically log in**
 3. Select your user account
-4. Apply changes
+4. Apply
 
 ## 3. Set Blank KWallet Password
 
@@ -19,7 +19,7 @@ sudo pacman -Syu --needed krdp kwalletmanager kwallet-pam qt6-tools
 2. Select your default wallet (`kdewallet`)
 3. Click on **Change Password...**
 4. Leave **both** Old and New password fields **completely empty**
-5. Confirm the change
+5. Apply
 
 ## 4. Configure KRDP Server
 
@@ -27,7 +27,7 @@ sudo pacman -Syu --needed krdp kwalletmanager kwallet-pam qt6-tools
 2. Toggle on the **Enable RDP Server**
 3. Add your user account and set a password under "Usernames"
 4. Check **Autostart at login** toggle below
-5. Apply all changes
+5. Apply
 
 ## 5. Configure firewall
 
@@ -90,10 +90,14 @@ If you have a 4K+ monitor, you may want to adjust the resolution to for better p
 1. Go to **System Settings - Display and Monitor**
 2. Select **Display Configuration**
 3. Select Resolution **1680x1050**
-4. Apply all changes
+4. Apply
 
 ## 10. Reboot
 
 ```bash
 sudo reboot
 ```
+
+## 11. Connection
+
+From Windows, you can connect using [Thincast Remote Desktop Client](https://thincast.com/en/products/client).
