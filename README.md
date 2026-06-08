@@ -85,7 +85,7 @@ systemctl --user enable --now app-org.kde.krdpserver.service
 
 ## 9. Adjust resolution
 
-If you have a 4K+ monitor, you may want to adjust the resolution to for better performance:
+If you have a 4K+ monitor, you may want to adjust the resolution for better performance:
 
 1. Go to **System Settings - Display and Monitor**
 2. Select **Display Configuration**
